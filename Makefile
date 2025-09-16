@@ -50,5 +50,5 @@ clean-ports: ## Clean occupied ports (8080, 3306)
 
 clean: ## Clean everything and restart fresh
 	docker-compose down -v --remove-orphans
-	docker volume prune -f
-	docker system prune -f
+	- docker rmi debt-management-web-backend-dev debt-management-web-backend-prod 2>nul
+	- docker volume rm debt-management-web_mysql_data debt-management-web_maven_cache 2>nul
