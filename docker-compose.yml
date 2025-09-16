@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+    backend-dev:
+        build: ./system
+        ports:
+            - "8080:8080"
+        volumes:
+            - ./system:/workspace
+            - maven_cache:/root/.m2
+        working_dir: /workspace
+        env_file:
+            - ./system/.env
+        command: ./mvnw spring-boot:run
+        depends_on:
+            - database
+
+    backend-prod:
+        build: ./system
+        ports:
+            - "8080:8080"
+        env_file:
+            - ./system/.env
+        depends_on:
+            - database
+
+    database:
+        image: mysql:latest
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: "password"
+            MYSQL_DATABASE: debt_management
+        volumes:
+            - mysql_data:/var/lib/mysql
+
+volumes:
+    mysql_data:
+    maven_cache:

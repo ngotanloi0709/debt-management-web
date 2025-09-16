@@ -7,6 +7,9 @@
 	"editor.formatOnSave": true,
 	"editor.formatOnPaste": true,
 
+	// Auto compile Java files on save
+	"java.autobuild.enabled": true,
+
 	// Java specific formatting
 	"[java]": {
 		"editor.defaultFormatter": "redhat.java",

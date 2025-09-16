@@ -1,25 +1,54 @@
-# Makefile for running the backend (Spring Boot)
-.PHONY: help install run format format-check
+# Makefile for Debt Management Web Application
+.PHONY: help backend stop backend-logs db-logs clean build clean-ports
 
 # Default target - show help
 .DEFAULT_GOAL := help
 
-help: ## Show this help message
-	@echo "Available commands:"
-	@echo "  install      - Download dependencies and build the project"
-	@echo "  run          - Start the Spring Boot application"
-	@echo "  format       - Format all Java files using Google Java Style"
-	@echo "  format-check - Check if all Java files are properly formatted"
+help: ## Show available commands
+	@echo "=== MAIN COMMAND ==="
+	@echo "  backend      - Start java and database services"
+	@echo ""
+	@echo "=== LOG COMMANDS ==="
+	@echo "  backend-logs - View backend Java logs"
+	@echo "  db-logs      - View database logs"
+	@echo ""
+	@echo "=== UTILITY COMMANDS ==="
+	@echo "  stop         - Stop all services"
+	@echo "  clean-ports  - Clean occupied ports (8080, 3306)"
+	@echo "  clean        - Clean everything and restart fresh"
+	@echo "  build        - Force rebuild (ignores cache)"
 	@echo "  help         - Show this help message"
 
-install: ## Download dependencies and build the project
-	cd system && mvnw.cmd clean install && cd ..
+# === MAIN COMMAND ===
+backend: ## Start all services and return to terminal
+	$(MAKE) clean-ports
+	- timeout /t 2 >nul 2>&1
+	docker-compose build
+	docker-compose up backend-dev
 
-run: ## Start the Spring Boot application
-	cd system && mvnw.cmd spring-boot:run && cd ..
+build: ## Force rebuild (when code changes)
+	docker-compose build --no-cache
 
-format: ## Format all Java files using Google Java Style
-	cd system && mvnw.cmd spotless:apply && cd ..
+# === LOG COMMANDS ===
+backend-logs: ## View backend Java logs
+	docker-compose logs -f backend-dev
 
-format-check: ## Check if all Java files are properly formatted
-	cd system && mvnw.cmd spotless:check && cd ..
+db-logs: ## View database logs
+	docker-compose logs -f database
+
+# === UTILITY COMMANDS ===
+stop: ## Stop all services
+	docker-compose down
+
+clean-ports: ## Clean occupied ports (8080, 3306)
+	- docker-compose down --remove-orphans 2>nul
+	- docker stop $$(docker ps -aq) 2>nul
+	- docker rm $$(docker ps -aq) 2>nul
+	- timeout /t 3 >nul 2>&1
+	- for /f "tokens=5" %%a in ('netstat -aon ^| findstr :8080 2^>nul') do taskkill /f /pid %%a 2>nul
+	- for /f "tokens=5" %%a in ('netstat -aon ^| findstr :3306 2^>nul') do taskkill /f /pid %%a 2>nul
+
+clean: ## Clean everything and restart fresh
+	docker-compose down -v --remove-orphans
+	docker volume prune -f
+	docker system prune -f
