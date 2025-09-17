@@ -1,6 +1,29 @@
 version: "3.8"
 
 services:
+    frontend-dev:
+        build:
+            context: ./client
+            target: builder
+        ports:
+            - "5173:5173"
+        volumes:
+            - ./client:/app
+            - /app/node_modules
+        working_dir: /app
+        command: npm run dev
+        environment:
+            - VITE_API_URL=http://localhost:8080
+
+    frontend-prod:
+        build:
+            context: ./client
+            target: production
+        ports:
+            - "3000:80"
+        depends_on:
+            - backend-prod
+
     backend-dev:
         build: ./server
         ports:
