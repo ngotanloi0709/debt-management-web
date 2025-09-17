@@ -2,25 +2,25 @@ version: "3.8"
 
 services:
     backend-dev:
-        build: ./system
+        build: ./server
         ports:
             - "8080:8080"
         volumes:
-            - ./system:/workspace
+            - ./server:/workspace
             - maven_cache:/root/.m2
         working_dir: /workspace
         env_file:
-            - ./system/.env
+            - ./server/.env
         command: ./mvnw spring-boot:run
         depends_on:
             - database
 
     backend-prod:
-        build: ./system
+        build: ./server
         ports:
             - "8080:8080"
         env_file:
-            - ./system/.env
+            - ./server/.env
         depends_on:
             - database
 
