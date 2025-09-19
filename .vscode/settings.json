@@ -1,23 +1,44 @@
 {
 	"java.compile.nullAnalysis.mode": "automatic",
 
+	// Java IntelliSense and Auto Import
+	"java.completion.enabled": true,
+	"java.completion.favoriteStaticMembers": [
+		"org.junit.jupiter.api.Assertions.*",
+		"org.mockito.Mockito.*"
+	],
+	"java.completion.importOrder": ["java", "javax", "jakarta", "org", "com"],
+	"java.completion.filteredTypes": ["java.awt.*", "com.sun.*"],
+	"java.saveActions.organizeImports": true,
+	"java.sources.organizeImports.starThreshold": 5,
+	"java.sources.organizeImports.staticStarThreshold": 3,
+
 	// Auto format on save
 	"editor.formatOnSave": true,
 	"editor.formatOnPaste": true,
 	"editor.tabSize": 4,
 	"editor.insertSpaces": true,
+	"editor.suggestSelection": "first",
+	"editor.quickSuggestions": {
+		"other": true,
+		"comments": false,
+		"strings": false
+	},
 
 	// Auto compile Java files on save
 	"java.autobuild.enabled": true,
 
-	// Java specific formatting - use built-in with 4 spaces
+	// Java specific formatting and IntelliSense
 	"[java]": {
 		"editor.defaultFormatter": "redhat.java",
 		"editor.formatOnSave": true,
 		"editor.tabSize": 4,
 		"editor.insertSpaces": true,
+		"editor.suggest.insertMode": "replace",
+		"editor.suggest.snippetsPreventQuickSuggestions": false,
 		"editor.codeActionsOnSave": {
-			"source.organizeImports": "explicit"
+			"source.organizeImports": "explicit",
+			"source.fixAll": "explicit"
 		}
 	},
 
