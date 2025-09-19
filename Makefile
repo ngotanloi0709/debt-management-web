@@ -16,6 +16,11 @@ help: ## Show available commands
 	@echo "  backend-logs  - View backend Java logs"
 	@echo "  db-logs       - View database logs"
 	@echo ""
+	@echo "=== FORMAT COMMANDS ==="
+	@echo "  format-frontend - Format frontend code (Vue.js/TypeScript)"
+	@echo "  format-backend  - Format backend code (Java)"
+	@echo "  format-all      - Format both frontend and backend code"
+	@echo ""
 	@echo "=== UTILITY COMMANDS ==="
 	@echo "  stop          - Stop all services"
 	@echo "  clean-ports   - Clean occupied ports (3000, 5173, 8080, 3306)"
@@ -50,6 +55,18 @@ backend: ## Start backend and database services
 
 build: ## Force rebuild (when code changes)
 	docker-compose build --no-cache
+
+# === FORMAT COMMANDS ===
+format-frontend: ## Format frontend code (Vue.js/TypeScript)
+	cd client && npm run format
+	cd client && npm run lint
+
+format-backend: ## Format backend code (Java)
+	cd server && mvnw.cmd spotless:apply
+
+format-all: ## Format both frontend and backend code
+	$(MAKE) format-frontend
+	$(MAKE) format-backend
 
 # === LOG COMMANDS ===
 frontend-logs: ## View frontend logs

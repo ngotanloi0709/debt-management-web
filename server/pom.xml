@@ -122,10 +122,10 @@
 				<version>2.43.0</version>
 				<configuration>
 					<java>
-						<googleJavaFormat>
-							<version>1.19.2</version>
-							<style>GOOGLE</style>
-						</googleJavaFormat>
+						<palantirJavaFormat>
+							<version>2.50.0</version>
+							<style>PALANTIR</style>
+						</palantirJavaFormat>
 						<removeUnusedImports />
 						<formatAnnotations />
 					</java>

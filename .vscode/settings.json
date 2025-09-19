@@ -1,21 +1,37 @@
 {
 	"java.compile.nullAnalysis.mode": "automatic",
-	"java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
-	"java.format.settings.profile": "GoogleStyle",
 
 	// Auto format on save
 	"editor.formatOnSave": true,
 	"editor.formatOnPaste": true,
+	"editor.tabSize": 4,
+	"editor.insertSpaces": true,
 
 	// Auto compile Java files on save
 	"java.autobuild.enabled": true,
 
-	// Java specific formatting
+	// Java specific formatting - use built-in with 4 spaces
 	"[java]": {
 		"editor.defaultFormatter": "redhat.java",
 		"editor.formatOnSave": true,
+		"editor.tabSize": 4,
+		"editor.insertSpaces": true,
 		"editor.codeActionsOnSave": {
 			"source.organizeImports": "explicit"
 		}
+	},
+
+	// TypeScript/Vue formatting
+	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.tabSize": 4
+	},
+	"[vue]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.tabSize": 4
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.tabSize": 4
 	}
 }
