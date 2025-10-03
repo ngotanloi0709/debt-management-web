@@ -14,7 +14,7 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authz -> authz
-                        .anyRequest().permitAll() // Cho phép tất cả requests không cần authentication
+                        .anyRequest().permitAll() // Allow all request go through the server
                 )
                 .csrf(csrf -> csrf.disable()) // Disable CSRF protection
                 .formLogin(form -> form.disable()) // Disable form login
